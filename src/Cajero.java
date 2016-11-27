@@ -36,6 +36,15 @@ public class Cajero
 		}
 		return null;
 	}
+	
+	public static boolean existeCuenta(int idCuenta)
+	{
+		Cuenta tempCuenta = containsCuenta(idCuenta);
+		if(tempCuenta != null)
+			return true;
+		return false;
+	}
+	
 	public static Cuenta login(int idCuenta, String clave)
 	{
 		Cuenta cuen = containsCuenta(idCuenta);
@@ -67,10 +76,21 @@ public class Cajero
 	{
 		Transaccion transaccion = new Transaccion(cuenta, monto, new Date(), tipoTransaccion);
 		addTransaccion(transaccion);
-		addCuenta(cuenta);
-		
+		addCuenta(cuenta);		
 	}
 	
+	/**
+	 * Sobrecarga de addTransaccion especifica para Transferencia de dinero
+	 * @param cuenta
+	 * @param monto
+	 * @param tipoTransaccion
+	 */
+	public static void addTransaccion(Cuenta emisor, Cuenta receptor, float monto)
+	{
+		Transaccion transaccion = new Transaccion(emisor, monto, new Date(), Transaccion.TipoTransaccion.ENVIO_TRANSFERENCIA);
+		addTransaccion(transaccion);
+		addCuenta(emisor);		
+	}
 	
 	public static ArrayList<Transaccion> getTransacciones(Cuenta cuenta)
 	{
@@ -93,6 +113,7 @@ public class Cajero
 	
 	public static void extraer(Cuenta cuenta, float monto)
 	{
+		Cajero.addTransaccion(cuenta, monto, Transaccion.TipoTransaccion.EXTRACCION);
 		cuenta.extraer(monto);
 	}
 	
@@ -104,5 +125,8 @@ public class Cajero
 			emisor.extraer(monto);
 			temp.depositar(monto);
 		}
+		//En ambas cuentas queda registro de la tranferencia de dinero
+		Cajero.addTransaccion(emisor, temp, monto);
+		Cajero.addTransaccion(temp, monto, Transaccion.TipoTransaccion.RECIBO_TRANSFERENCIA);
 	}
 }

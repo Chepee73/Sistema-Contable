@@ -44,11 +44,17 @@ public class Program
 					System.out.print("Su saldo actual es: " + cuenta.getSaldo());
 					break;
 				case 5:
-					System.out.print("Ingrese id de cuenta a transferir: ");
-					int tempIdCuenta = new Scanner(System.in).nextInt();
+					int tempIdCuentaTransf;
+					do
+					{
+						System.out.print("Ingrese id de cuenta a transferir: ");
+						tempIdCuentaTransf = new Scanner(System.in).nextInt();
+						if(!Cajero.existeCuenta(tempIdCuentaTransf))
+							System.out.println("CUENTA INEXISTENTE");
+					}while(!Cajero.existeCuenta(tempIdCuentaTransf));
 					System.out.print("Ingrese monto a transferir: ");
 					tempMonto = new Scanner(System.in).nextFloat();
-					Cajero.transferir(cuenta, tempIdCuenta, tempMonto);
+					Cajero.transferir(cuenta, tempIdCuentaTransf, tempMonto);
 					System.out.print("Su saldo actual es: " + cuenta.getSaldo());
 					break;
 				}
@@ -60,11 +66,13 @@ public class Program
 		Cuenta tempCuenta;
 		String tempClave;
 		int tempID;
-		
-		System.out.print("Ingrese id: ");
-		
-		tempID = new Scanner(System.in).nextInt();
-		
+		do
+		{
+			System.out.print("Ingrese id: ");
+			tempID = new Scanner(System.in).nextInt();	
+			if(!Cajero.existeCuenta(tempID))
+				System.out.println("CUENTA INEXISTENTE");
+		}while(!Cajero.existeCuenta(tempID));
 		do
 		{
 			System.out.print("Ingrese clave: ");

@@ -10,7 +10,8 @@ public class Transaccion
 	{
 		DEPOSITO,
 		EXTRACCION,
-		TRANSFERENCIA
+		ENVIO_TRANSFERENCIA,
+		RECIBO_TRANSFERENCIA
 	};
 	
 	private int id;

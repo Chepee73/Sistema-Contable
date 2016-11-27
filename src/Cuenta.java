@@ -42,7 +42,7 @@ public class Cuenta
 	{
 		if(monto <= getSaldo())
 		{
-			this.saldo -= saldo;
+			this.saldo -= monto;
 		}
 	}
 	
