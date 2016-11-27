@@ -55,15 +55,16 @@ public class Program
 			} while(opcion != 0); 
 	}
 	
-	public static void main(String[] args)
+	public static Cuenta login()
 	{
-		Cajero.addCuenta(new Cuenta(500.0f, Cuenta.TipoCuenta.GOLD, new Cliente("Cezar", "Azevedo", "93965081"), "180495"));
-		Cajero.addCuenta(new Cuenta(500.0f, Cuenta.TipoCuenta.PLATINUM, new Cliente("Diego", "Fernandez", "40542434"), "594700"));
-		int tempID;
-		String tempClave;
 		Cuenta tempCuenta;
+		String tempClave;
+		int tempID;
+		
 		System.out.print("Ingrese id: ");
+		
 		tempID = new Scanner(System.in).nextInt();
+		
 		do
 		{
 			System.out.print("Ingrese clave: ");
@@ -74,5 +75,19 @@ public class Program
 				System.out.println("CLAVE INCORRECTA.");
 			}
 		} while(tempCuenta == null);
+		return tempCuenta;
+	}
+	
+	public static void main(String[] args)
+	{
+		Cajero.addCuenta(new Cuenta(500.0f, Cuenta.TipoCuenta.GOLD, new Cliente("Cezar", "Azevedo", "93965081"), "180495"));
+		Cajero.addCuenta(new Cuenta(500.0f, Cuenta.TipoCuenta.PLATINUM, new Cliente("Diego", "Fernandez", "40542434"), "594700"));
+		
+		Cuenta tempCuenta;
+		do
+		{
+			tempCuenta = login();
+			menu(tempCuenta);
+		}while(true);
 	}
 }
